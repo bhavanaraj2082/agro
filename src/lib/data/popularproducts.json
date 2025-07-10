@@ -1,0 +1,190 @@
+[
+    {
+      "name": "Carrot Seeds (Non-GMO)",
+      "description": "Non-GMO carrot seeds for a crisp, sweet, and vibrant root vegetable. These seeds are perfect for beginner gardeners.",
+      "price": 6.5,
+      "product_number": "VEGE-CAR-002",
+      "properties": {
+        "pack_size": "100 seeds",
+        "growth_time": "60-75 days",
+        "plant_type": "Non-GMO"
+      },
+      "category": {
+        "name": "Seeds & Plants",
+        "url": "seeds-plants"
+      },
+      "subcategory": {
+        "name": "Vegetable Seeds",
+        "url": "vegetable-seeds"
+      }
+    },
+    {
+      "name": "Organic Tomato Seeds",
+      "description": "High-yielding organic tomato seeds that produce juicy, flavorful tomatoes. Perfect for home gardeners seeking a delicious harvest.",
+      "price": 10.99,
+      "product_number": "VEGE-TOM-001",
+      "properties": {
+        "pack_size": "50 seeds",
+        "growth_time": "70-85 days",
+        "plant_type": "Organic"
+      },
+      "category": { "name": "Seeds & Plants", "url": "seeds-plants" },
+      "subcategory": { "name": "Vegetable Seeds", "url": "vegetable-seeds" }
+    },
+    {
+      "name": "Broccoli Seeds",
+      "description": "Non-GMO broccoli seeds that grow fast and produce large heads of nutritious, crunchy broccoli.",
+      "price": 6.25,
+      "product_number": "VEGE-BRO-006",
+      "properties": {
+        "pack_size": "200 seeds",
+        "growth_time": "90-120 days",
+        "plant_type": "Non-GMO"
+      },
+      "category": {
+        "name": "Seeds & Plants",
+        "url": "seeds-plants"
+      },
+      "subcategory": {
+        "name": "Vegetable Seeds",
+        "url": "vegetable-seeds"
+      }
+    },
+    {
+      "name": "Geometric Concrete Pathway Stones",
+      "description": "These geometric concrete pathway stones are designed with modern sharp edges and clean lines, creating a sleek, stylish look for your garden pathways.",
+      "price": 49.99,
+      "product_number": "DECOR-PS-GCPS-006",
+      "properties": {
+        "material": "Concrete",
+        "dimensions": "12 x 12 inches",
+        "weight": "7 lbs per stone",
+        "color": "Light Gray",
+        "purpose": "Outdoor",
+        "style": "Modern",
+        "weather_resistant": true,
+        "non_slip": true,
+        "quantity": 1
+      },
+      "category": { "name": "Garden Décor", "url": "garden-decor" },
+      "subcategory": { "name": "Pathway Stones", "url": "pathway-stones" }
+    },
+    {
+      "name": "Recycled Rubber Pathway Stones",
+      "description": "These eco-friendly recycled rubber pathway stones are durable and flexible, making them ideal for high-traffic garden paths. They are also weather-resistant and slip-resistant.",
+      "price": 29.99,
+      "product_number": "DECOR-PS-RRPS-009",
+      "properties": {
+        "material": "Recycled Rubber",
+        "dimensions": "14 x 14 inches",
+        "weight": "6 lbs per stone",
+        "color": "Black",
+        "purpose": "Outdoor",
+        "style": "Eco-Friendly",
+        "weather_resistant": true,
+        "non_slip": true,
+        "quantity": 1
+      },
+      "category": {
+        "name": "Garden Décor",
+        "url": "garden-decor"
+      },
+      "subcategory": {
+        "name": "Pathway Stones",
+        "url": "pathway-stones"
+      }
+    },
+    {
+      "name": "Kubota L2501 Tractor",
+      "description": "The Kubota L2501 Tractor provides 25.5 horsepower with a 4WD drive system. A compact and powerful machine designed for heavy-duty tasks on smaller farms.",
+      "price": 16999.99,
+      "product_number": "AG-MACH-KL2501-002",
+      "properties": {
+        "horsepower": "25.5 HP",
+        "engine_type": "Diesel",
+        "drive_type": "4WD",
+        "weight": "2200 lbs",
+        "color": "Orange",
+        "purpose": "Agriculture",
+        "fuel_capacity": "6.6 gallons",
+        "transmission": "HST (Hydrostatic Transmission)",
+        "steering": "Power Steering",
+        "attachments_included": false,
+        "warranty": "2 years"
+      },
+      "category": {
+        "name": "Agricultural Machinery",
+        "url": "agricultural-machinery"
+      },
+      "subcategory": { "name": "Tractors", "url": "tractors" }
+    },
+    {
+      "name": "New Holland T4.75 Tractor",
+      "description": "The New Holland T4.75 Tractor offers 75 horsepower and advanced features such as fuel-efficient engines and enhanced comfort, making it perfect for large-scale farms.",
+      "price": 37999.99,
+      "product_number": "AG-MACH-NHT4.75-004",
+      "properties": {
+        "horsepower": "75 HP",
+        "engine_type": "Diesel",
+        "drive_type": "4WD",
+        "weight": "5000 lbs",
+        "color": "Blue",
+        "purpose": "Agriculture",
+        "fuel_capacity": "25 gallons",
+        "transmission": "Manual",
+        "steering": "Power Steering",
+        "attachments_included": false,
+        "warranty": "5 years"
+      },
+      "category": {
+        "name": "Agricultural Machinery",
+        "url": "agricultural-machinery"
+      },
+      "subcategory": { "name": "Tractors", "url": "tractors" }
+    },
+    {
+      "name": "Eden Drip Irrigation Kit",
+      "description": "The Eden Drip Irrigation Kit is an all-in-one solution for home gardening, with everything you need to create a drip irrigation system. It’s perfect for gardens, vegetable patches, and raised beds.",
+      "price": 59.99,
+      "product_number": "IRR-EDEN-004",
+      "properties": {
+        "type": "Drip Irrigation Kit",
+        "coverage_area": "150 sq ft",
+        "components": [
+          "Pressure regulator",
+          "Drip tubing (50 feet)",
+          "10 emitters",
+          "Connectors and stakes"
+        ],
+        "easy_installation": true,
+        "suitable_for": "Vegetable gardens, raised beds",
+        "material": "PVC and UV-resistant tubing",
+        "water_efficiency": "High",
+        "warranty": "1 year"
+      },
+      "category": { "name": "Irrigation Systems", "url": "irrigation-systems" },
+      "subcategory": {
+        "name": "Drip Irrigation Kits",
+        "url": "drip-irrigation-kits"
+      }
+    },
+    {
+      "name": "Orbit 5400 Gear Drive Sprinkler",
+      "description": "The Orbit 5400 Gear Drive Sprinkler is perfect for large lawns and gardens, offering adjustable coverage and a reliable gear drive system that provides consistent water distribution.",
+      "price": 39.99,
+      "product_number": "IRR-ORBIT5400-002",
+      "properties": {
+        "type": "Gear Drive Sprinkler",
+        "coverage_area": "40-70 feet radius",
+        "flow_rate": "1.5-3.5 GPM",
+        "adjustable_spray_pattern": true,
+        "material": "Heavy-duty plastic",
+        "water_efficiency": "Moderate",
+        "suitable_for": "Lawns, gardens",
+        "warranty": "3 years"
+      },
+      "category": { "name": "Irrigation Systems", "url": "irrigation-systems" },
+      "subcategory": { "name": "Sprinkler Systems", "url": "sprinkler-systems" }
+    }
+  ]
+  

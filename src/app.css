@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&family=DM+Sans:wght@400..700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    @apply font-dmSans text-content bg-gray-50;
+}
+
+.hide::-webkit-scrollbar{
+    @apply hidden;
+}
+
+h1,h2,h3,h4,h5,h6,button{
+    @apply font-rubik text-heading;
+}
+
+.scroll::-webkit-scrollbar {
+    @apply w-1.5 h-1.5;
+  }
+  
+  /* Track */
+  .scroll::-webkit-scrollbar-track {
+    @apply bg-primary-100 rounded;
+  }
+   
+  /* Handle */
+  .scroll::-webkit-scrollbar-thumb {
+    @apply bg-primary-400 rounded-md h-10;
+  }
+  
+  /* Handle on hover */
+  .scroll::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-600;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .clip-hexagon {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
