@@ -1,135 +1,157 @@
 <script>
-	import Icon from '@iconify/svelte';
-	// import CookiesPopup from "$lib/components/CookiesPopup.svelte";
-	// import Scroller from '$lib/components/Scroller.svelte';
-	// import Helpsection from '$lib/components/Helpsection.svelte';
-	// import Helpsection1 from '$lib/components/Helpsection1.svelte';
-	// import Helpsection2 from '$lib/components/Helpsection2.svelte';
-	import { page } from '$app/stores';
-	let currentUrl;
-	$: {
-  currentUrl = $page.url.pathname;
-//   console.log("currentUrl",currentUrl);
-}
+  import Icon from "@iconify/svelte";
+  export let companyAddress = "51/31, 1st Main Marenahalli, Vijayanagar";
+  function toggleHelp() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-	let isPopupOpen = false;
+  let showTooltip = false;
 
-	const togglePopup = (event) => {
-		event.preventDefault();  
-		isPopupOpen = !isPopupOpen; 
-	};
+  function handleMouseEnter(){
+    showTooltip = true;
+  }
 
-	const closePopup = () => {
-		isPopupOpen = false;
-	};
+  function handleMouseLeave(){
+    showTooltip = false;
+  }
 
-	const currentYear = new Date().getFullYear();
-	let footer;
+  const footerLinks = {
+    product: [
+      { name: "Landing Page", href: "#" },
+      { name: "Popup Builder", href: "#" },
+      { name: "Web-design", href: "#" },
+      { name: "Content", href: "#" },
+      { name: "Integrations", href: "#" },
+    ],
+    usecases: [
+      { name: "View Cart", href: "/cart" },
+      { name: "Help", href: "/help" },
+    ],
+    company: [
+      { name: "About Us", href: "/about" },
+      { name: "Contact Us", href: "/contact" },
+      { name: "Terms", href: "/terms" },
+      { name: "Privacy Policy", href: "/privacy-policy" },
+    ],
+  };
 
-	const excludedUrls = [
-  "/ecom-solutions",
-  "/safety/understanding-product-labels",
-  "/safety/globally-harmonized-system",
-  "/safety/tsca-8-notification",
-  "/safety/hazard-and-precautionary-statements",
-  "/products",
-  "/terms/site-and-terms",
-  "/terms/privacy-notice"
-];
+  const socialLinks = [
+    {
+      name: "Facebook",
+      icon: "iconoir:facebook",
+      href: "https://facebook.com/agroconnect",
+    },
+    {
+      name: "Instagram",
+      icon: "fa6-brands:instagram",
+      href: "https://instagram.com/agroconnect",
+    },
+    {
+      name: "YouTube",
+      icon: "hugeicons:youtube",
+      href: "https://youtube.com/agroconnect",
+    },
+    {
+      name: "LinkedIn",
+      icon: "uit:linkedin-alt",
+      href: "https://linkedin.com/company/agroconnect",
+    },
+     {
+      name: "scrollup",
+      icon: "fluent-emoji:up-arrow",
+      action: "scrollToTop",
+    }
+  ];
 </script>
-<!-- {#if currentUrl !== "/feedback"}
-<Helpsection1 />
-<Helpsection2 />
-{/if} -->
-<footer class="w-full bg-green-400 p-6 font-workSans" bind:this={footer}>
-	<!-- {#if currentUrl !== "/feedback" && currentUrl !== "/order-status" && currentUrl !== "/dashboard/myfavourite" && currentUrl !== "/safety/tsca-8-notification" && currentUrl !== "/documents" && currentUrl !== "/quick-order"}
-	<Helpsection {footer} />
-	{/if} -->
 
-	<div class="mx-auto">
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mt-4 w-11/12 mx-auto max-w-7xl">
-			<div class="md:block hidden">
-			<div class="flex flex-col items-center md:items-start text-center md:text-left">
-				<a href="/" aria-label="Go to homepage" class="text-white font-bold sm:text-xl text-lg uppercase">
-					Chemikart
-				</a>
-				<div class="mt-2 font-medium sm:text-sm text-xs text-gray-50">
-					No. 206, Vinni Arcade 100<br />
-					Feet Ring Road, Kathriguppe<br /> 
-					Main Rd, Bengaluru,<br />
-					Karnataka 560085
-				</div>
-			
-			</div>
-		</div>
-			<div class="flex flex-col items-center md:items-start text-center md:text-left">
-				<p class="text-white font-semibold sm:text-lg text-md uppercase">Information</p>
-				<ul class="mt-2 space-y-2 text-sm text-gray-50 underline-offset-2">
-					<li><a href="/about-us" class="font-medium sm:text-sm text-xs hover:underline">About Us</a></li>
-					<li><a href="/sitemap" class="font-medium sm:text-sm text-xs hover:underline">Site Map</a></li>
-					<li><a href="/newsroom" class="font-medium sm:text-sm text-xs hover:underline">Newsroom</a></li>
-					<li><a href="/copy-consent" class="font-medium sm:text-sm text-xs hover:underline">Copyright Consent</a></li>
-				</ul>
-			</div>
-			<div class="flex flex-col items-center md:items-start text-center md:text-left">
-				<p class="text-white font-semibold sm:text-lg text-md uppercase">Help & Support</p>
-				<ul class="mt-2 space-y-2 text-sm text-gray-50 underline-offset-2">
-					<li><a href="/contact-us" class="font-medium sm:text-sm text-xs hover:underline">Contact Us</a></li>
-					<li><a href="/help-support" class="font-medium sm:text-sm text-xs hover:underline">Customer Support</a></li>
-					<li><a href="/faq" class="font-medium sm:text-sm text-xs hover:underline">FAQs</a></li>
-					<li><a href="/ecom-solutions" class="font-medium sm:text-sm text-xs hover:underline">Chemikart Solutions</a></li>
-				</ul>
-			</div>
-			<div class="flex flex-col items-center md:items-start text-center md:text-left lg:mr-12">
-				<p class="text-white font-semibold sm:text-lg text-md uppercase">Orders</p>
-				<ul class="mt-2 space-y-2 text-sm text-gray-50 underline-offset-2">
-					<li><a href="/quick-order" class="font-medium sm:text-sm text-xs hover:underline">Quick Order</a></li>
-					<li><a href="/order-status" class="font-medium sm:text-sm text-xs hover:underline">Order Status</a></li>
-					<li><a href="/quotes" class="font-medium sm:text-sm text-xs hover:underline">Quotes</a></li>
-					<li><a href="/returns" class="font-medium sm:text-sm text-xs hover:underline">Returns & its Status</a></li>
-				</ul>
-				<div class="sm:mt-14 md:mt-0 lg:mt-14">
-					<!-- {#if !excludedUrls.includes(currentUrl)}					
-					<Scroller />
-					{/if} -->
-				</div>
-				<div class="sm:mt-14 md:mt-0 lg:mt-14 sm:hidden block">
-					<!-- {#if !excludedUrls.includes(currentUrl)}					 -->
-					<!-- <Scroller /> -->
-					<!-- {/if} -->
-				</div>
-			</div>
-			<div class="md:hidden block">
-				<div class="flex flex-col items-center md:items-start text-center md:text-left">
-					<a href="/" aria-label="Go to homepage" class="text-white font-bold sm:text-xl text-lg uppercase">
-						Chemikart
-					</a>
-					<div class="mt-2 font-medium sm:text-sm text-xs text-gray-50">
-						No. 206, Vinni Arcade 100<br />
-						Feet Ring Road, Kathriguppe<br /> 
-						Main Rd, Bengaluru,<br />
-						Karnataka 560085
-					</div>
-				
-				</div>
-				<!-- <Scroller /> -->
-			</div>
-			
+<footer class="bg-gradient-to-b from-primary-400 to-primary-700 w-full">
+  <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 lg:w-11/12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-sm text-black">
+      <div class="text-center md:text-left">
+        <div class="mb-4">
+          <a href="/" class="text-xl font-bold text-white">
+            Agro<span class="text-white">Connect</span>
+          </a>
+        </div>
+        <div
+          onclick="window.open('https://www.google.com/maps/place/51,+31,+1st+Main+Rd,+Kaveri+Layout,+Marenahalli,+Vijayanagar,+Bengaluru,+Karnataka+560040/@12.969821,77.532692,16z/data=!4m6!3m5!1s0x3bae3dd957daed27:0x5e1bcc409e939142!8m2!3d12.9698209!4d77.5326915!16s%2Fg%2F11q3_74mjm?hl=en&entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D', '_blank')"
+          class="cursor-pointer hover:underline text-white"
+        >
+          <p class="text-white">{companyAddress}</p>
+          <span>Bangalore - 560040</span>
+        </div>
+      </div>
 
-			
-		</div>
-		<div class="w-full">
-			<hr class="border-gray-50 m-4 border-1" />
-			<div
-				class="flex flex-col md:flex-row justify-center md:justify-between items-center text-gray-50 mx-auto w-11/12 mt-4 max-w-7xl">
-				<p class="text-xs text-start font-medium">
-					&copy; {currentYear} Agriconnect. <span class="md:block lg:inline">All Rights Reserved.</span>
-				</p>
-				
-			</div>
-		</div>
-	</div>	
-	<!-- {#if isPopupOpen}
-		<CookiesPopup isOpen={isPopupOpen} closePopup={closePopup} />
-	{/if} -->
+      <!-- Company Links -->
+      <div class="text-center md:text-left">
+        <h5 class="font-semibold mb-4 text-white text-xl">
+          Help & Information
+        </h5>
+        <ul class="space-y-3">
+          {#each footerLinks.company as link}
+            <li>
+              <a href={link.href} class="text-white hover:underline">
+                {link.name}
+              </a>
+            </li>
+          {/each}
+        </ul>
+      </div>
+
+      <div class="text-center md:text-left">
+        <div>
+          <h2 class="font-semibold mb-4 text-white text-xl">Social Media</h2>
+
+          <div
+            class="flex justify-center md:justify-start space-x-4 items-center mb-5"
+          >
+      {#each socialLinks as social}
+  {#if social.href}
+    <!-- Normal social link -->
+    <a
+      href={social.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="w-8 h-8 border rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary-600 hover:border-primary-200 transition-colors"
+      aria-label={social.name}
+    >
+      <Icon icon={social.icon} width="16" height="16" />
+    </a>
+  {:else if social.action === "scrollToTop"}
+    <!-- Scroll to top icon with tooltip -->
+     <button
+    on:click={toggleHelp}
+    on:mouseenter={handleMouseEnter}
+    on:mouseleave={handleMouseLeave}
+    class="ml-20 w-12 h-12 flex items-center justify-center  transition-colors relative"
+    aria-label={social.name}
+  >
+    <Icon icon={social.icon} class="w-7 h-7 ml-5" />
+    
+    {#if showTooltip}
+<div class="absolute bottom-10 left-2 transform -translate-x-1/2 z-50 whitespace-nowrap bg-black text-white font-medium rounded-md shadow mb-1 text-2s px-3 py-1">
+    Return to Top
+      <div class="absolute top-full right-1 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-black"></div>
+    </div>
+    {/if}
+  </button>
+  {/if}
+{/each}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Line -->
+    <div
+      class="mt-12 pt-8 border-t border-gray-200 text-center text-white text-sm"
+    >
+      <div class="sm:inline-block block">
+        &copy; {new Date().getFullYear()} Components2webs.
+      </div>
+      <div class="sm:inline-block block sm:ml-2 mt-1 sm:mt-0">
+        All rights reserved.
+      </div>
+    </div>
+  </div>
 </footer>

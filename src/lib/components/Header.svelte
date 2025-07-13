@@ -33,7 +33,7 @@
   $: isLoggedIn = !!authedUser?.id;
 
   const navItems = [
-    { name: "Home", href: "/" },
+    { name: "Product", href: "/products" },
     { name: "Contact Us", href: "/contact" },
     { name: "About Us", href: "/about" },
     { name: "View Quotes", href: "/quotes" },
@@ -190,6 +190,8 @@
   let resultdata = [];
   function handleData() {
     return async ({ result }) => {
+      console.log(result,"result");
+      
       if (result) {
         loading = false;
       }
@@ -281,7 +283,7 @@
 
   function selectProduct(product) {
     clearSearchState();
-    const url = `/product/${product?.manufacturerHref}/${product.partUrl}`;
+    const url = `/products/${product?.category?.url}/${product?.subcategory?.url}/${product?.product_number}`;
     goto(url);
   }
 
@@ -412,10 +414,10 @@
                     tabindex="0"
                   >
                     <p class="font-medium text-gray-900">
-                      {product?.productName}
+                      {product?.name}
                     </p>
                     <p class="text-xs text-gray-600">
-                      {product?.manufacturerName || ""}
+                      {product?.category?.name || ""}
                     </p>
                   </li>
                 {/each}
@@ -771,9 +773,9 @@
                 role="button"
                 tabindex="0"
               >
-                <p class="font-medium text-gray-900">{product?.productName}</p>
+                <p class="font-medium text-gray-900">{product?.name}</p>
                 <p class="text-xs text-gray-600">
-                  {product?.manufacturerName || ""}
+                  {product?.category?.name || ""}
                 </p>
               </li>
             {/each}

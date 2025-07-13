@@ -23,7 +23,7 @@ export const load = async ({ url, cookies, locals, depends }) => {
     const authedUser = { id: locals.user.userId };
     const userProfile = await Profile.findOne({ userId: authedUser.id });
 
-    console.log(userProfile, "userProfile");
+    // console.log(userProfile, "userProfile");
 
     if (!userProfile) {
       return {

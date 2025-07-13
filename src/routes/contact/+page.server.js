@@ -44,7 +44,7 @@ export const load = async ({ locals }) => {
 
   // Fetch the user profile from the database
   const userProfile = await Profile.findOne({ userId: authedUser.id });
-  console.log(userProfile, "userProfile");
+  // console.log(userProfile, "userProfile");
 
   // If no profile is found, return null
   if (!userProfile) {

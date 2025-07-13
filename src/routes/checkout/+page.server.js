@@ -1,48 +1,73 @@
-import { API_URL } from "$env/static/private"
-import { token } from '$lib/server/utils/jwtToken.js';
+
 import Cart from '$lib/server/models/Cart.js'
 import Profile from '$lib/server/models/Profile.js';
 import { createOrder, updateBillingAddressCart, updateShippingAddressCart } from '$lib/server/mongoActions.js';
+import Product from "$lib/server/models/Product.js";
+// export async function load({ locals }) {
+//     try {
 
+//         const userId = locals?.authedUser?.id || ""
+//         if (!userId) {
+//             let cartData
+//             return { cartData: [] }
+//         }
+//         console.log("userId",userId);
+//         const cartData = await Cart.findOne({ userId: userId });
+// console.log(cartData,"cart");
+//        return { 
+//     cartData: cartData ? JSON.parse(JSON.stringify(cartData)) : [] 
+// }
+
+//     } catch (error) {
+//         console.log(error);
+//     }
+
+// }
 export async function load({ locals }) {
     try {
-
         const userId = locals?.authedUser?.id || ""
         if (!userId) {
-            let cartData
-            return { cartData: [] }
+            return { cart: null }
         }
-        // console.log("userId",userId);
+        
+        console.log("userId", userId);
         const cart = await Cart.findOne({ userId: userId });
-        // console.log("cart ietms fectehdd",cart);
-
-        const fetchUrl = `${API_URL}/cart`;
-
-        const res = await fetch(fetchUrl, {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(cart.cartItems)
-        });
-        // console.log("resresresresresresresresresresresresres", res);
-
-        if (!res.ok) {
-            return { success: false, error: "Failed to check parts availability" };
+        console.log(cart, "cart");
+        
+        if (!cart || !cart.cartItems || cart.cartItems.length === 0) {
+            return { cart: null }
         }
-
-        const cartData = await res.json();
-        // console.log("data in cart page seever ", cartData);
-        return { cartData }
-
+        
+        // Extract product IDs from cart items
+        const productIds = cart.cartItems.map(item => item.productId);
+        
+        // Fetch all products at once
+        const products = await Product.find({ _id: { $in: productIds } });
+        
+        // Create a map for quick product lookup
+        const productMap = new Map(products.map(product => [product._id.toString(), JSON.parse(JSON.stringify(product))]));
+        
+        // Enhance cart items with product details
+        const enhancedCartItems = cart.cartItems.map(item => {
+            const product = productMap.get(item.productId.toString());
+            return {
+                productId: item.productId,
+                qty: item.qty,
+                stockId: item.stockId || null,
+                product: product || null
+            };
+        });
+        
+        // Convert cart to plain object and update cartItems
+        const cartObject = JSON.parse(JSON.stringify(cart));
+        cartObject.cartItems = enhancedCartItems;
+        
+        return { cartData: cartObject }
     } catch (error) {
         console.log(error);
+        return { cart: null }
     }
-
 }
-
-
 export const actions = {
     getHash: async ({ request, locals }) => {
         try {

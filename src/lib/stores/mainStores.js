@@ -11,7 +11,11 @@ export const cartTotal = writable(totalPrice);
 export const cartTotalComps = writable(0)
 export const currencyState= writable("inr")
 
+export const taxError = writable('');
+export const phoneError = writable('');
 
+export const taxNumber = writable('');
+export const phoneNumber = writable('');
 export function logout() {
 	authedUser.set({
 	  email: '',

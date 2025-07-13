@@ -1,5 +1,3 @@
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
 <div class="w-11/12 mx-auto max-w-7xl mt-10 mb-2">
     <div class="w-full mx-auto grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-16">
       <div class="flex justify-center lg:justify-start">

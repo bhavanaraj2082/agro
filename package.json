@@ -51,6 +51,7 @@
     "file-saver": "^2.0.5",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
+    "libphonenumber-js": "^1.12.9",
     "lucia": "^2.7.7",
     "mongoose": "^8.10.1",
     "mongoose-sequence": "^6.0.1",
