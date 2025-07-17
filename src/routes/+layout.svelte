@@ -6,6 +6,8 @@
 	import { authedUser } from '$lib/stores/mainStores.js';
 
 	export let data;
+	// console.log(data,"data");
+	
     $authedUser = data?.authedUser;
 
 </script>

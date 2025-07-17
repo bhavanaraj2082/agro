@@ -16,47 +16,18 @@
     import { goto } from "$app/navigation";
     import AddressBlock from "./AddressBlock.svelte";
     import { taxError, phoneError, taxNumber, phoneNumber } from "$lib/stores/mainStores.js";
-    
     export let data;
-    console.log(data, "data");
-   
-    $: profile = data?.profile || {};
+    console.log(data, "datsssssss");
     
+    $: profile = data.profile;
     let imgUrl = "";
     let isImgPopup = false;
-    let guestComps = [];
+    let guestComps;
     let showMergeModal = false;
     let loginModal = false;
     
-    // Debug statements
-    $: console.log("Cart store length:", $cart?.length);
-    $: console.log("Cart store contents:", $cart);
-    $: console.log("Raw cart data:", data?.cartData);
-    $: console.log("Cart total comps:", $cartTotalComps);
-    
-$: if (data?.cartData && Array.isArray(data.cartData) && data.cartData.length > 0) {
-    const processedCart = data.cartData.map((item) => {
-        const unitPrice = getPriceFromBreaks(
-            item?.stock?.pricing,
-            item.qty,
-        );
-        return { ...item, unitPrice };
-    });
-    
-    // Always update the cart when data changes
-    cart.set(processedCart);
-    cartTotalComps.set(processedCart.length);
-    console.log("Cart updated via reactive statement:", processedCart);
-} else if (data?.cartData && Array.isArray(data.cartData) && data.cartData.length === 0) {
-    // Handle empty cart case
-    cart.set([]);
-    cartTotalComps.set(0);
-    console.log("Cart cleared - empty data");
-}
-    
-    // Safe check for profile mobile number
-    $: if (profile?.mobileNr) {
-        phoneNumber.set(profile.mobileNr);
+    $: if(profile?.mobileNr){
+        phoneNumber.set(profile.mobileNr)
     }
     
     function imagePopup(img) {
@@ -65,112 +36,47 @@ $: if (data?.cartData && Array.isArray(data.cartData) && data.cartData.length > 
     }
     
     const scrollToTop = () => {
-        if (browser) {
+        if(browser){
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
-    
-function refreshCart() {
-    console.log("Raw data.cartData:", data?.cartData);
-    console.log("Current cart store:", $cart);
-    
-    // Force clear first
-    cart.set([]);
-    cartTotalComps.set(0);
-    
-    if (data?.cartData && Array.isArray(data.cartData) && data.cartData.length > 0) {
-        const processedCart = data.cartData.map((item) => {
-            const unitPrice = getPriceFromBreaks(
-                item?.stock?.pricing,
-                item.qty,
-            );
-            return { ...item, unitPrice };
-        });
-        cart.set(processedCart);
-        cartTotalComps.set(processedCart.length);
-        console.log("Cart manually refreshed:", processedCart);
-    } else {
-        console.log("No data to refresh cart with");
-    }
-}
+let cartData ;
+    onMount(() => {
+        if ($authedUser?.id) {
+            // Add null check and default to empty array
+             cartData = data?.cartData || [];
+            
+            // Simplified: directly use the product price, no complex pricing logic
+            // cart.set(
+            //     cartData.map((item) => ({
+            //         ...item,
+            //         unitPrice: item?.product?.price || 0
+            //     }))
+            // );
 
-    
-onMount(() => {
-    console.log("onMount called with data:", data);
-    
-    // Force reset cart store first
-    cart.set([]);
-    cartTotalComps.set(0);
-    
-    // Then initialize with fresh data
-    const cartData = data?.cartData;
-    console.log("cartData in onMount:", cartData);
-    
-    if (Array.isArray(cartData) && cartData.length > 0) {
-        const processedCart = cartData.map((item) => {
-            const unitPrice = getPriceFromBreaks(
-                item?.stock?.pricing,
-                item.qty,
-            );
-            return { ...item, unitPrice };
-        });
-        
-        cart.set(processedCart);
-        cartTotalComps.set(processedCart.length);
-        console.log("Cart set with processed data:", processedCart);
-    } else {
-        console.log("No cart data available or empty array");
-    }
-    
-    // Handle guest cart merge only if user is authenticated
-    if ($authedUser?.id) {
-        try {
-            guestComps = browser && localStorage.getItem("cart")
-                ? JSON.parse(localStorage.getItem("cart"))
-                : [];
-        } catch (error) {
-            console.error("Error parsing localStorage cart:", error);
-            guestComps = [];
-        }
-        
-        if (guestComps.length > 0) {
-            showMergeModal = true;
-        }
-    }
-});
-    // Safe calculation of total price
-    $: totalPrice = $cart.reduce((sum, item) => {
-        try {
-            const itemPrice = getPriceFromBreaks(item?.stock?.pricing, item.qty);
-            return sum + itemPrice * item.qty;
-        } catch (error) {
-            console.error("Error calculating item price:", error);
-            return sum;
-        }
-    }, 0);
-    
-    function getPriceFromBreaks(pricing = [], qty = 1) {
-        if (!Array.isArray(pricing) || pricing.length === 0) return 0;
-        
-        try {
-            const sorted = pricing.slice().sort((a, b) => a.break - b.break);
-            let selectedPrice = sorted[0]?.inr || 0;
-            
-            for (const tier of sorted) {
-                if (qty >= tier.break) {
-                    selectedPrice = tier.inr || 0;
-                } else {
-                    break;
-                }
+            guestComps =
+                browser && localStorage.getItem("cart")
+                    ? JSON.parse(localStorage.getItem("cart"))
+                    : [];
+            if (guestComps.length > 0) {
+                showMergeModal = true;
             }
-            
-            return selectedPrice;
-        } catch (error) {
-            console.error("Error in getPriceFromBreaks:", error);
-            return 0;
         }
-    }
-    
+    });
+
+    // Simplified total price calculation
+    // $: totalPrice = $cart.reduce((sum, item) => {
+    //     const itemPrice = item?.product?.price || 0;
+    //     const quantity = parseInt(item.qty) || 0;
+    //     return sum + (itemPrice * quantity);
+    // }, 0);
+
+    $: totalPrice = cartData?.cartItems?.reduce((sum, item) => {
+    const itemPrice = item?.product?.price || 0;
+    const quantity = parseInt(item.qty) || 0;
+    return sum + (itemPrice * quantity);
+}, 0) || 0;
+
     function handleCheckout() {
         if (!$authedUser?.id) {
             loginModal = true;
@@ -179,36 +85,7 @@ onMount(() => {
 </script>
 
 <Toaster position="bottom-right" richColors />
-
-<!-- Debug button - remove this after fixing -->
-{#if data?.cartData && Array.isArray(data.cartData) && data.cartData.length > 0}
-    <button 
-        class="bg-red-500 text-white px-4 py-2 rounded mb-4"
-        on:click={refreshCart}
-    >
-        Force Refresh Cart (Debug)
-    </button>
-{/if}
-
-<!-- Image popup modal -->
-{#if isImgPopup}
-    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white p-4 rounded-lg max-w-md max-h-md">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold">Product Image</h3>
-                <button 
-                    class="text-gray-500 hover:text-gray-700"
-                    on:click={() => isImgPopup = false}
-                >
-                    ✕
-                </button>
-            </div>
-            <img src={imgUrl} alt="Product" class="max-w-full max-h-full" />
-        </div>
-    </div>
-{/if}
-
-{#if !$cart?.length}
+{#if data?.cartData?.length === 0} 
     <CartEmpty />
 {:else}
     <div class="max-w-6xl mx-auto px-4 py-6 shadow-sm bg-white my-6">
@@ -222,7 +99,7 @@ onMount(() => {
         <!-- Product Card -->
 
         <div class=" space-y-3 mt-6">
-            {#each $cart as item}
+            {#each data?.cartData?.cartItems as item}
                 <div
                     class="bg-white relative p-4 flex border flex-col md:flex-row md:items-center gap-6 transition-all"
                 >
@@ -237,7 +114,7 @@ onMount(() => {
                                 class="w-24 h-24"
                                 src={`${PUBLIC_COMPBUY_IMAGE_PATH}/${item.image}`}
                                 alt=""
-                                onerror="this.src='/farm.jpg'"
+                                onerror="this.src='/farm.webp'"
                             />
                         </div>
                     </div>
@@ -247,25 +124,15 @@ onMount(() => {
                         class="flex-1 flex flex-col items-center md:items-start text-center md:text-left gap-2"
                     >
                         <a
-                            href="/product/{item.manufacturerHref}/{item.partUrl}"
+                            href="/products/{item.product?.categoryDetails?.url}/{item.product?.subcategoryDetails?.url}/{item?.product?.product_number}"
                             class="text-primary-500 font-bold hover:underline"
-                            >{item.productName}</a
+                            >{item?.product?.name }</a
                         >
                         <p class="font-bold text-sm">
-                            {item?.manufacturerName}
+                            {item?.product?.categoryDetails?.name }
                         </p>
-                        <p class="text-gray-600 font-semibold text-sm">
-                            {item?.subCategory?.name}
-                        </p>
+                        
 
-                        {#if item.dataSheet}
-                            <div class="mt-2">
-                                <Icon
-                                    icon="vscode-icons:file-type-pdf2"
-                                    class="text-3xl hover:bg-gray-100 rounded text-red-600 transition-all duration-300"
-                                />
-                            </div>
-                        {/if}
                     </div>
 
                     <!-- Action Buttons -->
@@ -275,12 +142,12 @@ onMount(() => {
                         <div class="flex flex-col items-start gap-2 mt-4">
                             <div class="lg:w-[250px] w-[160px]">
                                 <p class="text-gray-800 text-sm">
-                                    Price In
+                                    Price
                                     <span
                                         class="font-bold block overflow-hidden text-ellipsis whitespace-nowrap"
                                     >
-                                        ₹ {item?.unitPrice?.toLocaleString(
-                                            "en-IN",
+                                        {(item?.product?.price || 0).toLocaleString(
+                                            "en-US",
                                             {
                                                 maximumFractionDigits: 2,
                                                 minimumFractionDigits: 2,
@@ -297,7 +164,7 @@ onMount(() => {
         </div>
         <div class="flex justify-end gap-6">
             <div class="text-right mt-6 text-lg font-semibold text-gray-800">
-                Total: ₹ {totalPrice.toLocaleString("en-IN", {
+                Total: {totalPrice.toLocaleString("en-US", {
                     maximumFractionDigits: 2,
                     minimumFractionDigits: 2,
                 })}
@@ -326,7 +193,7 @@ onMount(() => {
                         scrollToTop()
                         cancel()
                     }
-                    formData.append("orderdetails", JSON.stringify($cart));
+                    formData.append("orderdetails", JSON.stringify(data?.cartData?.cartItems));
                     formData.append("firstname", data.profile.firstName);
                     formData.append("lastname", data.profile.lastName);
                     formData.append("billingAddress", $billingAddress);
@@ -354,6 +221,41 @@ onMount(() => {
                     >Place Order</button
                 >
             </form>
+        </div>
+    </div>
+{/if}
+
+{#if isImgPopup}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div
+        on:click={(e) => {
+            if (e.target === e.currentTarget) {
+                isImgPopup = false;
+            }
+        }}
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50"
+    >
+        <div
+            class="bg-white p-6 rounded flex flex-col shadow-lg w-11/12 sm:w-2/4 lg:w-2/5 2xl:w-2/6 space-y-2"
+        >
+            <button
+                class=" self-end"
+                on:click={(e) => {
+                    isImgPopup = false;
+                }}
+            >
+                <Icon
+                    icon="si:close-duotone"
+                    class="text-3xl hover:bg-gray-100 rounded text-red-600 transition-all duration-300"
+                />
+            </button>
+            <img
+                src="{PUBLIC_COMPBUY_IMAGE_PATH}/{imgUrl}"
+                class="w-56 h-56 md:w-96 md:h-96 object-cover mx-auto"
+                alt="img"
+                onerror="this.src='/farm.webp'"
+            />
         </div>
     </div>
 {/if}

@@ -7,7 +7,7 @@
   import { slide } from "svelte/transition";
   import { enhance } from "$app/forms";
  import { browser } from "$app/environment";
-  export let brandName = "Components2webs";
+  export let brandName = "Agro Connect";
   export let data;
  import { cartTotalComps } from "$lib/stores/mainStores.js";
   let form;
@@ -117,7 +117,7 @@
 	}
   	function handleCartData() {
 		return async ({ result }) => {
-      // console.log("result from enhace",result);  
+      console.log("result from enhace",result);  
 			const totalComps = result?.data?.cartData?.cartItems?.length || 0;
 			localStorage.setItem('totalComps', totalComps);
 			syncLocalStorageToStore();	

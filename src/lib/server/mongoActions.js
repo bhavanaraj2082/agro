@@ -14,6 +14,8 @@ import Category from "$lib/server/models/Category.js";
 import SubCategory from "$lib/server/models/Subcategory.js";
 import { redirect, error } from '@sveltejs/kit';
 import { LuciaError } from 'lucia';
+import Counter from '$lib/server/models/Counter.js';
+import Order from '$lib/server/models/Order.js';
 import {
 	APP_URL,
 	SENDER_EMAIL,
@@ -253,112 +255,154 @@ export const signUp = async (body, cookies) => {
   }
 };
 
-// export const signUp = async (body, cookies) => {
-//   console.log(body, "bodysignUp");
-//   const existingUser = await auth.getKey("email", body.email).catch(() => null);
-//   const existingUsernameKey = await auth.getKey('username', body.username).catch(() => null);
-//   // const existingPhoneKey = await auth
-//   //   .getKey("phone", body.phone)
-//   //   .catch(() => null);
-// console.log(existingUser,"existing user");
-// console.log(existingUsernameKey,"existingUsernameKey")
+export const updateShippingAddressCart = async (body) => {
+  const { userId, addAlternate, ...shippingDetails } = body;
+  shippingDetails.isDefault = shippingDetails.isDefault === 'true';
+  const addAlternateBoolean = addAlternate === 'true';
+  console.log(shippingDetails, 'details');
+  try {
+    const userProfile = await Profile.findOne({ userId: userId }).select('shippingAddress');
+    if (!userProfile) {
+      return { field: 'shipping', success: false, message: 'User not found' };
+    }
+    let shippingAddressArray;
+    if (addAlternateBoolean) {
+      if (!userProfile.shippingAddress || userProfile.shippingAddress.length === 0) {
+        const newAddress = {
+          ...shippingDetails,
+          addressId: nanoid(8),
+          isDefault: true
+        };
+        shippingAddressArray = [newAddress];
+      } else {
+        shippingAddressArray = [...userProfile.shippingAddress];
+        const newAddress = {
+          ...shippingDetails,
+          addressId: nanoid(8),
+          isDefault: shippingDetails.isDefault
+        };
+        if (newAddress.isDefault) {
+          shippingAddressArray = shippingAddressArray.map((addr) => ({
+            ...addr,
+            isDefault: false
+          }));
+        }
+        shippingAddressArray.push(newAddress);
+      }
+    } else {
+      shippingAddressArray = userProfile.shippingAddress.map((adr) => {
+        if (adr.addressId === shippingDetails.addressId) {
+          return { ...shippingDetails, isDefault: shippingDetails.isDefault };
+        } else if (shippingDetails.isDefault) {
+          return { ...adr, isDefault: false };
+        }
+        return adr;
+      });
+    }
+    userProfile.shippingAddress = shippingAddressArray;
+    await userProfile.save();
+    return {
+      field: 'shipping',
+      success: true,
+      message: addAlternateBoolean ? 'Added address successfully' : 'Updated successfully'
+    };
+  } catch (error) {
+    console.error('Error updating shipping address:', error);
+    return { field: 'shipping', success: false, message: 'Something went wrong' };
+  }
+};
 
-//   if (existingUser) {
-//     return {
-//       success: false,
-//       message: "This email already exists. Please login or try with another.",
-//     };
-//   }
+export const updateBillingAddressCart = async (body) => {
+  const { userId, addAlternate, ...billingDetails } = body;
+  console.log("userId", userId);
+  console.log("addAlternate", addAlternate);
+  console.log("ubillingDetailserId", billingDetails);
 
-//   if (existingUsernameKey) {
-//     return {
-//       success: false,
-//       message: "This username already exists. Please login or try with another.",
-//     };
-//   }
+  billingDetails.isDefault = billingDetails.isDefault === 'true';
+  const addAlternateBoolean = addAlternate === 'true';
+  try {
+    const userProfile = await Profile.findOne({ userId: userId }).select('billingAddress');
+    console.log("userProfile", userProfile);
+
+    if (!userProfile) {
+      return { field: 'billing', success: false, message: 'User not found' };
+    }
+    let billingAddressArray;
+    if (addAlternateBoolean) {
+      if (!userProfile.billingAddress || userProfile.billingAddress.length === 0) {
+        const newAddress = { ...billingDetails, addressId: nanoid(8), isDefault: true };
+        billingAddressArray = [newAddress];
+      } else {
+        billingAddressArray = [...userProfile.billingAddress];
+        const newAddress = {
+          ...billingDetails,
+          addressId: nanoid(8),
+          isDefault: billingDetails.isDefault
+        };
+        if (newAddress.isDefault) {
+          billingAddressArray = billingAddressArray.map((addr) => ({
+            ...addr,
+            isDefault: false
+          }));
+        }
+        billingAddressArray.push(newAddress);
+      }
+    } else {
+      billingAddressArray = userProfile.billingAddress.map((adr) => {
+        if (adr.addressId === billingDetails.addressId) {
+          return { ...billingDetails, isDefault: billingDetails.isDefault };
+        } else if (billingDetails.isDefault) {
+          return { ...adr, isDefault: false };
+        }
+        return adr;
+      });
+    }
+    console.log('object', billingAddressArray);
+    userProfile.billingAddress = billingAddressArray;
+    await userProfile.save();
+    return {
+      field: 'billing',
+      success: true,
+      message: addAlternateBoolean ? 'Added address successfully' : 'Updated successfully'
+    };
+  } catch (error) {
+    console.error('Error updating billing address:', error);
+    return { field: 'billing', success: false, message: 'Something went wrong' };
+  }
+};
+
+export const createOrder = async (body) => {
+  try {
+    let orderid;
+    const counter = await Counter.findOne({});
+    if (counter?._id) {
+      orderid = await Counter.findOneAndUpdate(
+        { _id: counter._id },
+        { $inc: { counter: 1 } },
+        { new: true }
+      );
+    } else {
+      orderid = await Counter.create({ counter: 1 });
+    }
+    body.orderid = orderid.counter;
+    console.log("orderorderorderorderorderorderorderorderorderorderorderorder", body);
+
+    const record = JSON.parse(JSON.stringify(await Order.create(body)));
+    console.log(record, "record");
 
 
-//   const luciaUser = await auth.createUser({
-//     key: {
-//       providerId: "email",
-//       providerUserId: body.email,
-//       password: body.password,
-//     },
-//     attributes: {
-//       username: body.firstName,
-//       email: body.email,
-//       // phone: body.phone,
-//     },
-//   });
+    const updatedCart = await Cart.findOneAndUpdate(
+      { userId: record.userId },
+      { isActive: false, cartItems: [] },
+      { new: true }
+    );
 
-//   // if (!existingPhoneKey) {
-//   //   await auth.createKey({
-//   // 	userId: luciaUser.userId,
-//   // 	providerId: "phone",
-//   // 	providerUserId: body.phone,
-//   // 	password: "Password123",
-//   //   });
-//   // }
-
-//   // if (!existingUsernameKey) {
-//   // 	await auth.createKey({
-//   // 		userId: luciaUser.userId,
-//   // 		providerId: "username",
-//   // 		providerUserId: body.username,
-//   // 		password: body.password,
-//   // 	});
-//   // }
-//   console.log(luciaUser, "luciaUser");
-
-//   const newProfile = new Profile({
-//     userId: luciaUser.userId,
-//     firstName: body.firstName,
-//     lastName: body.lastName,
-//     cellPhone: body.phone,
-//     email: body.email,
-//     isPhoneVerified: body.isPhoneVerified,
-//     isEmailVerified: body.isEmailVerified,
-//     country: body.country,
-//     currency: body.currency,
-//   });
-
-//   const savedProfile = JSON.parse(JSON.stringify(await newProfile.save()));
-//   console.log(savedProfile, "savedProfile");
-
-//   const subscribeUrl = `${API_URL}/subscribe`;
-//   await subscribeIfNotAlready(subscribeUrl, body.email, PUBLIC_WEBSITE_NAME, token);
-
-//   // 2. Create empty cart for user
-//   const cart = new Cart({
-//     cartItems: [],
-//     userId: luciaUser.userId,
-//     userEmail: body.email
-//   });
-
-//   await cart.save();
-
-//   const key = await auth.useKey("email", body.email, body.password);
-//   console.log("key.userId", key);
-
-//   const user = await auth.getUser(key.userId);
-//   const session = await auth.createSession({
-//     userId: user.userId,
-//     attributes: {},
-//   });
-
-//   const sessionCookie = auth.createSessionCookie(session);
-//   cookies.set(
-//     sessionCookie.name,
-//     sessionCookie.value,
-//     sessionCookie.attributes
-//   );
-//   console.log("Session created successfully");
-
-//   return {
-//     success: true,
-//     message: "Signup successful",
-//   };
-// };
+    return record;
+  } catch (error) {
+    console.error('Error creating order:', error);
+    throw error;
+  }
+};
 
   export const passwordVerificationToken = async (body, verifyType) => {
     const { email, userId } = body;
