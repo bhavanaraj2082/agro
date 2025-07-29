@@ -8,7 +8,7 @@
     countries,
     phoneNumberPatterns,
     countryCurrencyMap,
-  } from "$lib/Data/constants.js";
+  } from "$lib/data/constants.js";
   let username = "";
   let email = "";
   let country = "";
