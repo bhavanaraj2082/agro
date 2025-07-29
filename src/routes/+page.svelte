@@ -9,7 +9,7 @@
     // export let data;
   
 
-    import { PUBLIC_WEBSITE_URL, PUBLIC_WEBSITE_NAME } from "$env/static/public";
+    // import { PUBLIC_WEBSITE_URL, PUBLIC_WEBSITE_NAME } from "$env/static/public";
   
   </script>
   
