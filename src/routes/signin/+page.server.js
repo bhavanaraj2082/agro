@@ -1,6 +1,5 @@
 
 import { fail, redirect } from "@sveltejs/kit";
-import { fail, redirect } from "@sveltejs/kit";
 import { auth } from "$lib/server/lucia.js";
 import { LuciaError } from "lucia";
 import { authErrorMessages } from "$lib/server/lucia.js";

@@ -47,7 +47,11 @@ export const submitContactInfo = async (data) => {
 	}
 };
 
+export const sendemailOtp = async (email) => {
+};
 
+export async function verifyemailOtp(email, enteredOtp) {
+};
 
 
 

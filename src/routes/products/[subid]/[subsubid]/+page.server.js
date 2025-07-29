@@ -1,4 +1,4 @@
-import { addToCart, favorite } from '$lib/server/mongoActions.js';
+import { addToCart } from '$lib/server/mongoActions.js';
 import { loadProductsubcategory } from '$lib/server/mongoLoads.js';
 import { error } from '@sveltejs/kit';
 
@@ -133,19 +133,19 @@ export const actions = {
         }
     },
     
-    favorite: async ({ request }) => {
-        const favdata = Object.fromEntries(await request.formData());
-        console.log("Form Data Received:", favdata);
-        try {
-            const result = await favorite(favdata);
-            return result;
-        } catch (error) {
-            console.error("Error adding to favourites:", error.message);
-            return {
-                success: false,
-                type: "error",
-                message: "Something went wrong please try again later!",
-            };
-        }
-    },
+    // favorite: async ({ request }) => {
+    //     const favdata = Object.fromEntries(await request.formData());
+    //     console.log("Form Data Received:", favdata);
+    //     try {
+    //         const result = await favorite(favdata);
+    //         return result;
+    //     } catch (error) {
+    //         console.error("Error adding to favourites:", error.message);
+    //         return {
+    //             success: false,
+    //             type: "error",
+    //             message: "Something went wrong please try again later!",
+    //         };
+    //     }
+    // },
 };

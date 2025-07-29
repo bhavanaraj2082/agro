@@ -934,19 +934,10 @@
 </script>
 
 <div
-  class="flex flex-col md:flex-row justify-center z-50 items-start shadow-md my-24 rounded-lg p-10 md:p-0 max-w-5xl"
+  class="flex flex-col md:flex-row justify-center z-50 items-start shadow-md  rounded-lg p-10 md:p-0 "
 >
-  <!-- <button
-    on:click={() => goto("/")}
-    class="absolute top-0.5 right-4 md:right-4 flex z-50 items-center justify-center py-2 px-2 sm:px-3 text-primary-500 bg-white hover:bg-primary-600 hover:text-white sm:rounded-md rounded-full transition duration-200 shadow-md"
-  >
-    <div class="flex items-center space-x-2">
-      <Icon icon="mdi:home" class="text-xl" />
-      <span class="hidden sm:inline text-sm font-medium">Back to Home</span>
-    </div>
-  </button> -->
   <div
-    class="flex flex-col md:flex-row bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden shadow-2xl"
+    class="flex flex-col md:flex-row bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden shadow-2xl w-full max-w-6xl"
   >
     <div
       class="w-full md:hidden md:w-3/5 p-8 md:pb-12 md:px-12 flex flex-col justify-center relative overflow-hidden"
@@ -967,20 +958,11 @@
 
       <div class="relative mt-16 z-10">
         <img src="/authimg/register.webp" alt="login" />
-        <!-- <h1 class="text-2xl md:text-4xl font-bold text-white mb-6">
-          Create Your Free Account
-        </h1>
-        <div class="md:w-72 w-20 h-1 bg-primary-50 mb-8"></div>
-        <p class="text-white/90 sm:text-lg text-xs max-w-lg text-md mb-8">
-         Join us and unlock powerful features tailored to you. Manage your
-          activities, track progress, and connect with your community—all in one
-          place.
-        </p> -->
       </div>
     </div>
 
     <div
-      class="content md:w-1/2 p-4 md:p-10 flex flex-col justify-center bg-white"
+      class="content md:w-3/5 lg:w-1/2 p-6 md:p-12 flex flex-col justify-center bg-white min-h-[600px]"
     >
       <h2 class="text-2xl font-bold text-primary-500 sm:pt-0 pt-2 sm:pb-2 pb-4">
         Register
@@ -992,107 +974,13 @@
           >Enter your account</a
         >
       </p>
-      <!-- <p class="text-gray-500 mb-5">
-      Already have an account? <a
-        href="/login"
-        class="underline text-primary-500 hover:text-primary-600">Login.</a
-      >
-    </p> -->
 
       <form
         method="POST"
         action="?/register"
         use:enhance={handleFormSubmission}
       >
-        <!-- <div class="flex items-center gap-3 mx text-md mt-2 mb-5">
-        <label class="flex items-center md:gap-2 font-medium">
-          For a Business
-          <input
-            type="radio"
-            name="account"
-            value="For a Business"
-            class="peer hidden"
-            on:change={toggleFields}
-          />
-          <span
-            class="w-4 h-4 rounded-full border border-black bg-white flex items-center justify-center peer-checked:border-primary-600 peer-checked:bg-primary-600"
-          >
-            <span class="w-2 h-2 rounded-full bg-white peer-checked:bg-white"
-            ></span>
-          </span>
-        </label>
-        <label class="flex items-center gap-2 font-medium">
-          For Myself
-          <input
-            type="radio"
-            name="account"
-            value="For Myself"
-            checked
-            class="peer hidden"
-            on:change={toggleFields}
-          />
-          <span
-            class="w-4 h-4 rounded-full border border-black bg-white flex items-center justify-center peer-checked:border-primary-600 peer-checked:bg-primary-600"
-          >
-            <span class="w-2 h-2 rounded-full bg-white peer-checked:bg-white"
-            ></span>
-          </span>
-        </label>
-      </div> -->
-        <!-- {#if showBusinessDetails} -->
-
-        <!-- {/if} -->
-
-        <!-- <div class="mb-4 flex flex-col md:flex-row md:space-x-4">
-        <div class="flex-1 mb-2 md:mb-0">
-          <label
-            for="companyname"
-            class="block text-sm font-medium text-gray-600"
-            >Company Name</label
-          >
-          <input
-            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:border-primary-400 focus:ring-0 focus:ring-primary-400 placeholder-gray-400 placeholder:text-sm h-10 text-sm"
-            type="text"
-            name="companyname"
-            bind:value={companyName}
-            placeholder="Company Name"
-            on:input={() => {
-              errors.companyName = !companyName
-                ? "*Required"
-                : !/^[a-zA-Z\s]+$/.test(companyName)
-                  ? "Company name can only contain letters and spaces"
-                  : "";
-            }}
-          />
-          <p class=" text-red-500 text-left text-xs">
-            {errors?.companyName || ""}
-          </p>
-        </div>
-        <div class="flex-1 mb-2 md:mb-0">
-          <label
-            for="companytype"
-            class="block text-sm font-medium text-gray-600"
-            >Company Type
-          </label>
-          <input
-            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:border-primary-400 focus:ring-0 focus:ring-primary-400 placeholder-gray-400 placeholder:text-sm h-10 text-sm"
-            type="text"
-            name="companytype"
-            bind:value={companyType}
-            placeholder="Company Type"
-            on:input={() => {
-              errors.companyType = !companyType
-                ? "*Required"
-                : !/^[a-zA-Z\s]+$/.test(companyType)
-                  ? "Company type can only contain letters and spaces"
-                  : "";
-            }}
-          />
-          <p class=" text-red-500 text-left text-xs">
-            {errors?.companyType || ""}
-          </p>
-        </div>
-      </div> -->
+      
 
         <div class="mb-4 flex flex-col md:space-y-4">
           <div class="flex-1 mb-2 md:mb-0">
@@ -1141,74 +1029,13 @@
           </div>
         </div>
         <div class="mb-4 flex flex-col md:space-y-4">
-          <!-- <div class="flex-1 mb-2 md:mb-0">
-            <label
-              for="username"
-              class="block text-sm font-medium text-gray-600"
-              ><span class="text-red-500">*</span> Username</label
-            >
-            <input
-              type="text"
-              id="username"
-              name="username"
-              maxlength="50"
-              bind:value={username}
-              on:input={(e) => {
-                username = e.target.value.trimStart();
-                validateUsername();
-              }}
-              placeholder="Enter your username"
-              class="mt-1 block w-full p-2 border border-gray-300 rounded-lg pl-5 focus:border-primary-400 focus:outline-none focus:ring-1 focus:ring-primary-100 placeholder-gray-400 placeholder:text-sm h-10 text-sm"
-            />
-            {#if errors.username}
-              <div class="text-red-500 text-xs mt-1">{errors.username}</div>
-            {/if}
-          </div> -->
+        
           <div class="flex-1 mb-2 md:mb-0 relative">
             <label for="email" class="block text-sm font-medium text-gray-600"
               ><span class="text-red-500">*</span> Email</label
             >
             <div class="relative">
-              <!-- <form
-                action="?/verifyemail"
-                bind:this={form5}
-                method="POST"
-                use:enhance={({ formData }) => {
-                  formData.append("email", email);
-                  return async ({ result }) => {
-                    console.log("result", result);
 
-                    isLoading = false;
-                    console.log(result);
-                    if (result.data?.status === 200) {
-                      toast.success(result.data.message);
-                      ProfileEmailVerified = result.data.isEmailVerified;
-                      verificationMessage = result.data.message;
-
-                      if (
-                        verificationMessage.includes(
-                          "Verification email sent successfully. Please check your inbox.",
-                        )
-                      ) {
-                        displayMessage = "Please check your inbox.";
-                        emailSent = true;
-                        isOtpVerified = false;
-                      } else {
-                        displayMessage = verificationMessage;
-                        emailSent = false;
-                        isOtpVerified = true;
-                      }
-                    } else {
-                      ProfileEmailVerified = result.data.isEmailVerified;
-                      toast.error(result.data.message);
-                      emailSent = false;
-                    }
-                  };
-                }}
-                on:submit={() => {
-                  isLoading = true;
-                }}
-              > -->
                 <input
                   type="email"
                   id="email"
@@ -1217,9 +1044,7 @@
                   bind:value={email}
                   on:input={() => {
                     validateEmail();
-                    // ProfileEmailVerified = false;
-                    // emailSent = false;
-                    // isOtpVerified = false;
+
                   }}
                   placeholder="Enter your email"
                   class="mt-1 block w-full p-2 pr-24 border border-gray-300 rounded-lg pl-5 focus:border-primary-400 focus:ring-0 focus:ring-primary-400 placeholder-gray-400 placeholder:text-sm focus:outline-none text-sm h-10"
@@ -1772,26 +1597,10 @@
             {/if}
           </button>
 
-          <!-- OR Divider -->
-          <div
-            class="flex items-center text-sm text-gray-500 font-semibold w-full max-w-md mb-6"
-          >
-            <div class="flex-grow border-t border-gray-300"></div>
-            <span class="px-3">OR</span>
-            <div class="flex-grow border-t border-gray-300"></div>
-          </div>
 
           <!-- Social Buttons -->
           <div class="w-full max-w-md space-y-4">
-            <!-- Google Button -->
-            <button
-              on:click={() => redirectTo(googleUrl)}
-              type="button"
-              class="w-full flex items-center justify-center gap-3 py-2 px-4 text-black bg-white border border-gray-400 rounded-lg transition duration-200"
-            >
-              <Icon icon="flat-color-icons:google" class="text-2xl" />
-              <span class="text-sm font-medium">Sign up with Google</span>
-            </button>
+
 
             <!-- LinkedIn Button (Optional) -->
             <!--
