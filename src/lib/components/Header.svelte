@@ -36,7 +36,6 @@
     { name: "Product", href: "/products" },
     { name: "Contact Us", href: "/contact" },
     { name: "About Us", href: "/about" },
-    { name: "View Quotes", href: "/quotes" },
   ];
 
   function handleError() {

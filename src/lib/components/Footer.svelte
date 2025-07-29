@@ -31,7 +31,7 @@
       { name: "About Us", href: "/about" },
       { name: "Contact Us", href: "/contact" },
       { name: "Terms", href: "/terms" },
-      { name: "Privacy Policy", href: "/privacy-policy" },
+      { name: "Privacy Policy", href: "/privacy" },
     ],
   };
 
@@ -147,7 +147,7 @@
       class="mt-12 pt-8 border-t border-gray-200 text-center text-white text-sm"
     >
       <div class="sm:inline-block block">
-        &copy; {new Date().getFullYear()} Components2webs.
+        &copy; {new Date().getFullYear()} Agro Connect.
       </div>
       <div class="sm:inline-block block sm:ml-2 mt-1 sm:mt-0">
         All rights reserved.
