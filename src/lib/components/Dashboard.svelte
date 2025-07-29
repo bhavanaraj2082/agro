@@ -4,7 +4,7 @@
   import { invalidate } from "$app/navigation";
   import { toast, Toaster } from "svelte-sonner";
   import { onMount } from "svelte";
-  import { countries, phoneNumberPatterns, indianStates, postalCodePatterns } from "$lib/Data/constants.js";
+  import { countries, phoneNumberPatterns, indianStates, postalCodePatterns } from "$lib/data/constants.js";
 
   export let data;
   $: console.log("Dashboard-->", data);
