@@ -1,6 +1,3 @@
-
-import { API_URL } from "$env/static/private";
-import { PUBLIC_WEBSITE_NAME } from "$env/static/public";
 import { updateProfile, addOrUpdateAddress, deleteAddress} from "$lib/server/mongoActions.js";
 
 

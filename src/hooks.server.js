@@ -2,9 +2,6 @@
 import {
   MONGO_USERNAME,
   MONGO_PASSWORD,
-  MONGO_HOST,
-  MONGO_PORT,
-  MONGO_DATABASE,
 } from "$env/static/private";
 import mongoose from "mongoose";
 import { auth } from '$lib/server/lucia.js';

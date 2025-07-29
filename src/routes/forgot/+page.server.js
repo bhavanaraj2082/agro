@@ -1,4 +1,4 @@
-import { passwordVerificationToken, userUpdatePassword } from '$lib/server/mongoActions.js';
+import { passwordVerificationToken } from '$lib/server/mongoActions.js';
 
 export const actions = {
 	resetrequestStep1: async ({ request, locals }) => {
