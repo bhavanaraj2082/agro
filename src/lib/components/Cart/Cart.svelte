@@ -1,5 +1,5 @@
 <script>
-  import { PUBLIC_COMPBUY_IMAGE_PATH } from "$env/static/public";
+  import { PUBLIC_IMAGE_PATH } from "$env/static/public";
   import { authedUser, cartTotalComps } from "$lib/stores/mainStores.js";
   import { tick } from "svelte";
   import { browser } from "$app/environment";
